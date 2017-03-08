@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Doc Locator</title>
+
+    <!-- normalize css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <!-- custom css -->
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <header>
+      <h1 id="title">The Doc Locator</h1>
+      <h4>Find a doctor near you</h4>
+      <form id="search-form">
+        <input type="text" placeholder="Search by address or zipcode...">
+        <button type="submit" name="button">Search</button>
+        <select id="specialty" name="specialty">
+        </select>
+        <select id="gender" name="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <input type="checkbox" value="newPatients" name="newPatients"> Accepting new patients
+      </form>
+    </header>
+
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- main javascript -->
+    <script type="text/javascript" src="app.js"></script>
+    <!-- google maps api -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+    async defer></script>
+  </body>
+</html>

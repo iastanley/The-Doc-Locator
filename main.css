@@ -2,6 +2,15 @@ body * {
   box-sizing: border-box;
 }
 
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
 /*Minimized header styles*/
 header {
   background: #000;
@@ -80,4 +89,42 @@ form div {
   background: #ccc;
   float: left;
   overflow-y: scroll;
+}
+
+#results h3 {
+  text-align: center;
+}
+
+
+
+.doc-card {
+  width: 90%;
+  margin: 10px auto;
+  background: #fff;
+  border: 1px solid #000;
+  padding: 5px;
+}
+
+.doc-card img {
+  float: left;
+  margin-right: 10px;
+}
+
+.expanded-description {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  clear: both;
+  display: none;
+}
+
+.expanded-description p {
+  margin: 0;
+  text-align: justify;
+}
+
+#expand {
+  cursor: pointer;
+  clear: both;
+  margin: 0;
+  text-align: center;
 }

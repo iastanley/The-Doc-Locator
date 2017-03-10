@@ -10,19 +10,24 @@
     <link rel="stylesheet" href="main.css">
   </head>
   <body>
-    <header>
-      <h1 id="title">The Doc Locator</h1>
-      <h4>Find a doctor near you</h4>
+    <!-- Apply full-screen class to header for initial view -->
+    <header class="">
+      <h1 class="title">The Doc Locator</h1>
+      <h4 class="title">Find a doctor near you</h4>
       <form id="search-form">
-        <input type="text" placeholder="Search by address or zipcode...">
-        <button type="submit" name="button">Search</button>
-        <select id="specialty" name="specialty">
-        </select>
-        <select id="gender" name="gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-        <input type="checkbox" value="newPatients" name="newPatients"> Accepting new patients
+        <div class="search">
+          <input type="text" placeholder="Search by address or zipcode...">
+          <button type="submit" name="button">Search</button>
+        </div>
+        <div class="filters">
+          <select id="specialty" name="specialty">
+          </select>
+          <select id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <input type="checkbox" value="newPatients" name="newPatients"> Accepting new patients
+        </div>
       </form>
     </header>
 
@@ -35,7 +40,7 @@
     <!-- main javascript -->
     <script type="text/javascript" src="app.js"></script>
     <!-- google maps api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
-    async defer></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"
+    async defer></script> -->
   </body>
 </html>

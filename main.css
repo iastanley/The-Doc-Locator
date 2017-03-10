@@ -1,0 +1,66 @@
+body * {
+  box-sizing: border-box;
+}
+
+header {
+  background: #000;
+  color: #fff;
+  height: 100px;
+  padding: 20px 10px;
+}
+
+h1 {
+  width: 40%;
+  float: left;
+}
+
+form {
+  width: 60%;
+  float: left;
+}
+
+h1, h4 {
+  margin: 0;
+}
+
+h4 {
+  display: none;
+}
+
+form div {
+  margin: 5px auto;
+}
+
+.full-screen {
+  height: 100vh;
+  text-align: center;
+  padding-top: 100px;
+}
+
+.full-screen h1 {
+  width: 100%;
+  float: none;
+}
+
+.full-screen h4 {
+  display: block;
+  margin: 20px auto;
+}
+
+.full-screen form {
+  width: 100%;
+  float: none;
+}
+
+.full-screen form div {
+  margin: 20px auto;
+  width: 40%;
+}
+
+.search input {
+  width: 80%;
+}
+
+.search button {
+  width: 19%;
+}

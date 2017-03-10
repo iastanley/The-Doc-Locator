@@ -2,10 +2,11 @@ body * {
   box-sizing: border-box;
 }
 
+/*Minimized header styles*/
 header {
   background: #000;
   color: #fff;
-  height: 100px;
+  height: 10vh;
   padding: 20px 10px;
 }
 
@@ -31,6 +32,15 @@ form div {
   margin: 5px auto;
 }
 
+.search input {
+  width: 80%;
+}
+
+.search button {
+  width: 19%;
+}
+
+/*Full screen header styles*/
 .full-screen {
   height: 100vh;
   text-align: center;
@@ -57,10 +67,17 @@ form div {
   width: 40%;
 }
 
-.search input {
-  width: 80%;
+#map {
+  height: 90vh;
+  width: 70%;
+  background: grey;
+  float: left;
 }
 
-.search button {
-  width: 19%;
+#results {
+  height: 90vh;
+  width: 30%;
+  background: #ccc;
+  float: left;
+  overflow-y: scroll;
 }

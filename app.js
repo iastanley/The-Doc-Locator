@@ -1,6 +1,7 @@
 $(function(){
 
   displayDocResults();
+  specialtyOptions();
 
   function displayDocResults(){
     var html = '';
@@ -26,6 +27,27 @@ $(function(){
 
     $('#results').append(html);
 
+  }
+
+  function specialtyOptions() {
+    //hard coded for the moment
+    //betterdoctor api offers
+    var options = [
+      {uid: "body-imaging-radiologist", name: "Body Imaging"},
+      {uid: "clinical-pathologist", name: "Clinical Pathology"},
+      {uid: "allergy-immunology-allergy", name: "Allergy & Immunology"},
+      {uid: "dermatologist", name: "Dermatology"},
+      {uid: "immunodermatologist", name: "Cliniccal & Laboratory Dermatological Immunology"}
+    ];
+
+    var html = '';
+    for (var i = 0; i < options.length; i++) {
+      html += '<option value="' + options[i].uid + '">';
+      html += options[i].name;
+      html += '</option>';
+    }
+
+    $('#specialty').html(html);
   }
 
 

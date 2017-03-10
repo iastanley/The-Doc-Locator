@@ -29,6 +29,14 @@ form {
   float: left;
 }
 
+select[name="specialty"] {
+  width: 40%;
+}
+
+select[name="gender"] {
+  width: 18%;
+}
+
 h1, h4 {
   margin: 0;
 }

@@ -1,4 +1,15 @@
+var map;
+//google maps initialize map
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 37.7575408, lng: -122.4530505},
+    zoom: 15
+  });
+}
+
 $(function(){
+
+
 
   displayDocResults();
   specialtyOptions();
@@ -9,6 +20,8 @@ $(function(){
     //add more here later
     $('header').removeClass('full-screen');
   });
+
+
 
   function displayDocResults(){
     var html = '';

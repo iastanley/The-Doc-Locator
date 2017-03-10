@@ -3,6 +3,13 @@ $(function(){
   displayDocResults();
   specialtyOptions();
 
+  //form event handler
+  $('#search-form').submit(function(event){
+    event.preventDefault();
+    //add more here later
+    $('header').removeClass('full-screen');
+  });
+
   function displayDocResults(){
     var html = '';
     // dummy data for betterdoctor api

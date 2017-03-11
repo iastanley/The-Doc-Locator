@@ -1,27 +1,20 @@
 var map;
+
 //google maps initialize map
 function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat: 37.7575408, lng: -122.4530505},
-    zoom: 15
-  });
-}
-
-$(function(){
-
-
-
   displayDocResults();
   specialtyOptions();
 
   //form event handler
   $('#search-form').submit(function(event){
     event.preventDefault();
-    //add more here later
+    var mapCenter = {lat: 37.7575408, lng: -122.4574279};
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: mapCenter,
+      zoom: 8
+    });
     $('header').removeClass('full-screen');
   });
-
-
 
   function displayDocResults(){
     var html = '';
@@ -70,5 +63,4 @@ $(function(){
     $('#specialty').html(html);
   }
 
-
-});
+}

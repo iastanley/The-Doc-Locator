@@ -84,7 +84,7 @@ form div {
 #results {
   height: 90vh;
   width: 30%;
-  background: #ccc;
+  background: #ddd;
   float: left;
   overflow-y: scroll;
 }

@@ -13,8 +13,14 @@ function initMap() {
       center: mapCenter,
       zoom: 8
     });
+    getDocLocations();
     $('header').removeClass('full-screen');
   });
+
+  function getDocLocations(){
+    //will eventually have code from ajax request
+    console.log(testData);
+  }
 
   function displayDocResults(){
     var html = '';

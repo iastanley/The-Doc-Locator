@@ -122,7 +122,7 @@ function initMap() {
       html += '<p><strong>Specialty: </strong>' + specialty + '</p>';
       html += '</div>';
       html += '<div class="expanded-description"><p>' + description + '</div>';
-      html += '<p id="expand">Learn More</p>';
+      html += '<p id="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
       html += '</div>';
     }
 

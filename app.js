@@ -125,7 +125,7 @@ function initMap() {
       {uid: "immunodermatologist", name: "Cliniccal & Laboratory Dermatological Immunology"}
     ];
 
-    var html = '';
+    var html = '<option value="" selected disabled>Choose a Specialty</option>';
     for (var i = 0; i < options.length; i++) {
       html += '<option value="' + options[i].uid + '">';
       html += options[i].name;

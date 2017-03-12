@@ -67,8 +67,7 @@ function initMap() {
     var description;
     //build html
     for (var i = 0; i < data.data.length; i++) {
-      imgSrc = (data.data[i].profile.image_url || 'https://asset3.betterdoctor.com/assets/general_doctor_male.png');
-      console.log(imgSrc);
+      imgSrc = data.data[i].profile.image_url ? data.data[i].profile.image_url : 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
       name = data.data[i].profile.first_name + ' '
             + (data.data[i].profile.middle_name || '') + ' '
             + data.data[i].profile.last_name + ', '

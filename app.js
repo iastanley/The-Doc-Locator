@@ -1,38 +1,80 @@
+var BETTER_DOCTOR_URL = 'https://api.betterdoctor.com/2016-03-01/doctors';
 var map;
+var docLocations = [];
 
-//google maps initialize map
+//google maps API callback function runs when script loads
 function initMap() {
-  displayDocResults();
   specialtyOptions();
 
   //form event handler
   $('#search-form').submit(function(event){
     event.preventDefault();
+    //switch to results view by changing header style
+    $('header').removeClass('full-screen');
+    //store location from google maps search
     var mapCenter = {lat: 37.7575408, lng: -122.4574279};
+    //initialize the map with the user input location
     map = new google.maps.Map(document.getElementById('map'), {
       center: mapCenter,
       zoom: 8
     });
-    getDocLocations();
-    $('header').removeClass('full-screen');
+    //ajax call to betterdoctor API using locaiton as search query and filters
+    // getBetterDoctorData(mapCenter, docDataCallback);
+
+    //test data - delete for real version
+    getBetterDoctorData(testData);
+
   });
 
-  function getDocLocations(){
-    //will eventually have code from ajax request
-    console.log(testData);
+  //betterdoctor API ajax call handler
+  //this is the version for the final code
+  // function getBetterDoctorData(location, callback) {
+  //   //make ajax call to betterdoctor API
+  //   var query = {
+  //     key: '',
+  //     location: location.lat + ',' + location.lng + ',20',
+  //     limit: 20
+  //   }
+  //   $.getJSON(BETTER_DOCTOR_URL, query, callback);
+  // }
+
+  //testData handler for betterdoctor API data
+  //remove from final version
+  function getBetterDoctorData(data) {
+    docDataCallback(data);
   }
 
-  function displayDocResults(){
-    var html = '';
-    // dummy data for betterdoctor api
-    var imgSrc = 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
-    var name = 'Mallik' + ' ' + 'Thatipelli' + ' ' + 'MD';
-    var specialty = 'Pediatrics';
-    var description = 'California Vascular & Vein Center is founded and operated by Dr. Mallik Thatipelli, with a goal to offer comprehensive medical care to vascular and vein diseases. Established in 2010, our clinic provides minimally invasive, non-surgical treatment options for all vascular and venous problems. Dr. Thatipelli is fellowship trained in Vascular Medicine at the world renowned Mayo Clinic and board certified in Vascular Medicine, Endovascular Medicine and Phlebology. Our trained and experienced staff is committed to provide excellent care. We perform all of our varicose vein procedures in our office under minimal sedation with no downtime. Patients can walk home soon after the procedure completion and can resume normal activities. We also treat circulation problems such as PAD, HTN and, carotid stenosis. We offer comprehensive evaluation and definitive treatment for leg wounds for arterial and venous problems.';
+  //callback function for the betterdoctor API call
+  function docDataCallback(data){
+    //get doctor locations and add markers to map
+    getDocLocations(data);
+    //build html for results section
+    displayDocResults(data);
+  }
 
-    //loop to build each doctor card
-    //loop will change slightly with real data
-    for (var i = 0; i < 10; i++) {
+  function getDocLocations(data){
+    //will eventually have code from ajax request
+    console.log(data);
+  }
+
+  function displayDocResults(data){
+    //build html for doctor result cards
+    var html = '';
+    //create array of what we need
+    var imgSrc;
+    var name;
+    var specialty;
+    var description;
+    //build html
+    for (var i = 0; i < data.data.length; i++) {
+      imgSrc = (data.data[i].profile.image_url || 'https://asset3.betterdoctor.com/assets/general_doctor_male.png');
+      console.log(imgSrc);
+      name = data.data[i].profile.first_name + ' '
+            + (data.data[i].profile.middle_name || '') + ' '
+            + data.data[i].profile.last_name + ', '
+            + data.data[i].profile.title;
+      specialty = data.data[i].specialties[0].name;
+      description = data.data[i].profile.bio;
       html += '<div class="doc-card">';
       html += '<img src="' + imgSrc + '">';
       html += '<div class="min-description">';

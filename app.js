@@ -32,7 +32,7 @@ function initMap() {
         //ajax call to betterdoctor API using locaiton as search query and filters
         getBetterDoctorData(mapCenter, docDataCallback);
       } else {
-        console.log('location service error');
+        console.log('Geolocation service error: ' + status);
       }
     });
   });
@@ -88,7 +88,7 @@ function initMap() {
 
   function displayDocResults(data){
     //build html for doctor result cards
-    var html = '';
+    var html = '<h3>Results</h3>';
     //create array of what we need
     var imgSrc;
     var name;
@@ -121,7 +121,7 @@ function initMap() {
       html += '</div>';
     }
 
-    $('#results').append(html);
+    $('#results').html(html);
 
   }
 

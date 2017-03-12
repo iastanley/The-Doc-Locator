@@ -55,10 +55,11 @@ function initMap() {
 
   //callback function for the betterdoctor API call
   function docDataCallback(data){
-    //get doctor locations and add markers to map
-    getDocLocations(data);
     //build html for results section
     displayDocResults(data);
+    //get doctor locations and add markers to map
+    getDocLocations(data);
+
   }
 
   //add marker data to map based on doctor locations
@@ -77,6 +78,10 @@ function initMap() {
           },
           map: map,
           title: data.data[i].uid
+        });
+        marker.addListener('click', function(){
+          console.log('This marker was clicked: ' + this.title);
+          $('#results').find('#' + this.title).css('border', '1px solid red');
         });
         bounds.extend(marker.getPosition());
       }

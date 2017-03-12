@@ -52,8 +52,10 @@ function initMap() {
     displayDocResults(data);
   }
 
+  //add marker data to map based on doctor locations
   function getDocLocations(data){
-    //add marker data to map based on doctor locations
+    //bounds object needed to fit all markers in map zoomed view
+    var bounds = new google.maps.LatLngBounds();
     //loop through each doctor in data object
     for (var i = 0; i < data.data.length; i++) {
       //loop through each practice for a particular doctor
@@ -67,8 +69,10 @@ function initMap() {
           map: map,
           title: data.data[i].uid
         });
+        bounds.extend(marker.getPosition());
       }
     }
+    map.fitBounds(bounds);
   }
 
   function displayDocResults(data){

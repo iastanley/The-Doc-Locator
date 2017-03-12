@@ -1,10 +1,12 @@
 var BETTER_DOCTOR_URL = 'https://api.betterdoctor.com/2016-03-01/doctors';
 var map;
-var docLocations = [];
+// var geocoder;
+var mapCenter;
 
 //google maps API callback function runs when script loads
 function initMap() {
   specialtyOptions();
+  var geocoder = new google.maps.Geocoder();
 
   //form event handler
   $('#search-form').submit(function(event){
@@ -12,18 +14,27 @@ function initMap() {
     //switch to results view by changing header style
     $('header').removeClass('full-screen');
     //store location from google maps search - hard coded temporarily
-    var mapCenter = {lat: 37.7575408, lng: -122.4574279};
-    //initialize the map with the user input location
-    map = new google.maps.Map(document.getElementById('map'), {
-      center: mapCenter,
-      zoom: 8
+    // var mapCenter = {lat: 37.7575408, lng: -122.4574279};
+    //get input from user
+    var userInput = $('#user-input').val();
+    //use geocoding to get location
+    console.log(userInput);
+    geocoder.geocode({'address': userInput}, function(results, status){
+      if (status == 'OK') {
+        mapCenter = results[0].geometry.location;
+        //initialize the map with the user input location
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: mapCenter,
+          zoom: 8
+        });
+        //test data - delete for real version
+        // getBetterDoctorData(testData);
+        //ajax call to betterdoctor API using locaiton as search query and filters
+        getBetterDoctorData(mapCenter, docDataCallback);
+      } else {
+        console.log('location service error');
+      }
     });
-    //ajax call to betterdoctor API using locaiton as search query and filters
-    getBetterDoctorData(mapCenter, docDataCallback);
-
-    //test data - delete for real version
-    // getBetterDoctorData(testData);
-
   });
 
   //betterdoctor API ajax call handler
@@ -32,7 +43,7 @@ function initMap() {
     //make ajax call to betterdoctor API
     var query = {
       user_key: '21117ecb33b4e4b1650558f7b9657e24',
-      location: location.lat + ',' + location.lng + ',20',
+      location: location.lat() + ',' + location.lng() + ',20',
       limit: 20
     }
     $.getJSON(BETTER_DOCTOR_URL, query, callback);

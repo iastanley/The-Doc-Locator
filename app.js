@@ -80,8 +80,10 @@ function initMap() {
           title: data.data[i].uid
         });
         marker.addListener('click', function(){
-          console.log('This marker was clicked: ' + this.title);
+          $('.doc-card').css('border', '1px solid black');
+          $('.expanded-description').hide();
           $('#results').find('#' + this.title).css('border', '1px solid red');
+          $('#results').find('#' + this.title + ' .expanded-description').show();
         });
         bounds.extend(marker.getPosition());
       }

@@ -53,8 +53,22 @@ function initMap() {
   }
 
   function getDocLocations(data){
-    //will eventually have code from ajax request
-    console.log(data);
+    //add marker data to map based on doctor locations
+    //loop through each doctor in data object
+    for (var i = 0; i < data.data.length; i++) {
+      //loop through each practice for a particular doctor
+      for (var j = 0; j < data.data[i].practices.length; j++) {
+        //add marker to map
+        var marker = new google.maps.Marker({
+          position: {
+            lat: data.data[i].practices[j].lat,
+            lng: data.data[i].practices[j].lon
+          },
+          map: map,
+          title: data.data[i].uid
+        });
+      }
+    }
   }
 
   function displayDocResults(data){
@@ -65,6 +79,7 @@ function initMap() {
     var name;
     var specialty;
     var description;
+    var uid;
     //build html
     for (var i = 0; i < data.data.length; i++) {
       imgSrc = data.data[i].profile.image_url ? data.data[i].profile.image_url : 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
@@ -73,8 +88,9 @@ function initMap() {
             + data.data[i].profile.last_name + ', '
             + data.data[i].profile.title;
       specialty = data.data[i].specialties[0].name;
+      uid = data.data[i].uid;
       description = data.data[i].profile.bio;
-      html += '<div class="doc-card">';
+      html += '<div class="doc-card" id="' + uid + '">';
       html += '<img src="' + imgSrc + '">';
       html += '<div class="min-description">';
       html += '<p><strong>Name: </strong>' + name + '</p>';

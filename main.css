@@ -120,7 +120,7 @@ form div {
   text-align: justify;
 }
 
-#expand {
+.expand {
   cursor: pointer;
   clear: both;
   margin: 0;

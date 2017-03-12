@@ -1,6 +1,5 @@
 var BETTER_DOCTOR_URL = 'https://api.betterdoctor.com/2016-03-01/doctors';
 var map;
-// var geocoder;
 var mapCenter;
 
 //google maps API callback function runs when script loads
@@ -14,9 +13,9 @@ function initMap() {
     //switch to results view by changing header style
     $('header').removeClass('full-screen');
     //get input from user
-    var userInput = $('#user-input').val();
+    var userLocation = $('#user-input').val();
     //use geocoding to get location
-    geocoder.geocode({'address': userInput}, function(results, status){
+    geocoder.geocode({'address': userLocation}, function(results, status){
       if (status == 'OK') {
         mapCenter = results[0].geometry.location;
         console.log(mapCenter.lat() + ',' + mapCenter.lng());
@@ -33,6 +32,17 @@ function initMap() {
         console.log('Geolocation service error: ' + status);
       }
     });
+  });
+
+  $('#results').on('click', '.expand', function(){
+    if ($(this).find('i').attr('class') == 'fa fa-chevron-down') {
+      $(this).find('i').attr('class', 'fa fa-chevron-up');
+      $(this).prev().show();
+    } else {
+      $(this).find('i').attr('class', 'fa fa-chevron-down');
+      $(this).prev().hide();
+    }
+
   });
 
   //betterdoctor API ajax call handler
@@ -102,17 +112,22 @@ function initMap() {
     var uid;
     //build html
     for (var i = 0; i < data.data.length; i++) {
-      try {
-        imgSrc = data.data[i].profile.image_url;
-      } catch(error) {
+      if (data.data[i].profile.image_url.indexOf('_female') !== -1) {
         imgSrc = 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
+      } else {
+        imgSrc = data.data[i].profile.image_url;
       }
       // imgSrc = data.data[i].profile.image_url ? data.data[i].profile.image_url : 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
       name = data.data[i].profile.first_name + ' '
             + (data.data[i].profile.middle_name || '') + ' '
             + data.data[i].profile.last_name + ', '
             + data.data[i].profile.title;
-      specialty = data.data[i].specialties[0].name;
+            console.log(data.data[i]);
+      if (data.data[i].specialties) {
+        specialty = data.data[i].specialties[0].name;
+      } else {
+        specialty = '';
+      }
       uid = data.data[i].uid;
       description = data.data[i].profile.bio;
       html += '<div class="doc-card" id="' + uid + '">';
@@ -122,7 +137,7 @@ function initMap() {
       html += '<p><strong>Specialty: </strong>' + specialty + '</p>';
       html += '</div>';
       html += '<div class="expanded-description"><p>' + description + '</div>';
-      html += '<p id="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
+      html += '<p class="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
       html += '</div>';
     }
 
@@ -138,7 +153,7 @@ function initMap() {
       {uid: "clinical-pathologist", name: "Clinical Pathology"},
       {uid: "allergy-immunology-allergy", name: "Allergy & Immunology"},
       {uid: "dermatologist", name: "Dermatology"},
-      {uid: "immunodermatologist", name: "Cliniccal & Laboratory Dermatological Immunology"}
+      {uid: "immunodermatologist", name: "Clinical & Laboratory Dermatological Immunology"}
     ];
 
     var html = '<option value="" selected disabled>Choose a Specialty</option>';

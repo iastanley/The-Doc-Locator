@@ -18,8 +18,7 @@ function initMap() {
     //get optional filters from user
     var specialtyValue = $('#specialty').val();
     var genderValue = $('#gender').val();
-    var acceptingValue = Boolean($('#newPatients:checked').val());
-    var filter = createFilterObject(specialtyValue, genderValue, acceptingValue);
+    var filter = createFilterObject(specialtyValue, genderValue);
 
     //use geocoding to get location
     geocoder.geocode({'address': userLocation}, function(results, status){
@@ -32,9 +31,9 @@ function initMap() {
           zoom: 8
         });
         //test data - delete for real version
-        getBetterDoctorData(testData);
+        // getBetterDoctorData(testData);
         //ajax call to betterdoctor API using locaiton as search query and filters
-        // getBetterDoctorData(mapCenter, docDataCallback);
+        getBetterDoctorData(mapCenter, filter, docDataCallback);
       } else {
         console.log('Geolocation service error: ' + status);
       }
@@ -47,30 +46,29 @@ function initMap() {
 
   //betterdoctor API ajax call handler
   //this is the version for the final code
-  // function getBetterDoctorData(location, callback) {
-  //   //make ajax call to betterdoctor API
-  //   var query = {
-  //     user_key: '21117ecb33b4e4b1650558f7b9657e24',
-  //     location: location.lat() + ',' + location.lng() + ',20',
-  //     limit: 20
-  //   }
-  //   $.getJSON(BETTER_DOCTOR_URL, query, callback);
-  // }
+  function getBetterDoctorData(location, filter, callback) {
+    //make ajax call to betterdoctor API
+    var query = {
+      user_key: '21117ecb33b4e4b1650558f7b9657e24',
+      location: location.lat() + ',' + location.lng() + ',20',
+      limit: 20
+    }
+    $.getJSON(BETTER_DOCTOR_URL, query, callback);
+  }
 
   //constructs filter object
-  function createFilterObject(specialty, gender, accepting) {
+  function createFilterObject(specialty, gender) {
     return {
       specialty: specialty,
-      gender: gender,
-      accepting: accepting
+      gender: gender
     }
   }
 
   //testData handler for betterdoctor API data
   //remove from final version
-  function getBetterDoctorData(data) {
-    docDataCallback(data);
-  }
+  // function getBetterDoctorData(data) {
+  //   docDataCallback(data);
+  // }
 
   //callback function for the betterdoctor API call
   function docDataCallback(data){

@@ -83,7 +83,9 @@ function initMap() {
           title: data.data[i].uid
         });
         marker.addListener('click', function(){
-          selectCard($('#results').find('#' + this.title));
+          var id = this.title;
+          document.getElementById(id).scrollIntoView(true);
+          selectCard($('#' + id));
         });
         bounds.extend(marker.getPosition());
       }

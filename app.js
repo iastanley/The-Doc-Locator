@@ -35,14 +35,7 @@ function initMap() {
   });
 
   $('#results').on('click', '.expand', function(){
-    if ($(this).find('i').attr('class') == 'fa fa-chevron-down') {
-      $(this).find('i').attr('class', 'fa fa-chevron-up');
-      $(this).prev().show();
-    } else {
-      $(this).find('i').attr('class', 'fa fa-chevron-down');
-      $(this).prev().hide();
-    }
-
+    toggleCard($(this).parent());
   });
 
   //betterdoctor API ajax call handler
@@ -90,10 +83,7 @@ function initMap() {
           title: data.data[i].uid
         });
         marker.addListener('click', function(){
-          $('.doc-card').css('border', '1px solid black');
-          $('.expanded-description').hide();
-          $('#results').find('#' + this.title).css('border', '1px solid red');
-          $('#results').find('#' + this.title + ' .expanded-description').show();
+          selectCard($('#results').find('#' + this.title));
         });
         bounds.extend(marker.getPosition());
       }
@@ -164,6 +154,30 @@ function initMap() {
     }
 
     $('#specialty').html(html);
+  }
+
+  //FUNCTIONS FOR HANDLING CARD EXPAND/COLLAPSE AND SELECTION
+  function toggleCard(card) {
+    //if card is collapsed show
+    if (card.find('i').attr('class') == 'fa fa-chevron-down') {
+      card.find('i').attr('class', 'fa fa-chevron-up');
+      card.find('.expanded-description').show();
+    } else {
+      card.find('i').attr('class', 'fa fa-chevron-down');
+      card.find('.expanded-description').hide();
+    }
+  }
+
+  function resetAllCards() {
+    $('.doc-card').css('border', '1px solid black');
+    $('.expand').find('i').attr('class', 'fa fa-chevron-down');
+    $('.expanded-description').hide();
+  }
+
+  function selectCard(card) {
+    resetAllCards();
+    toggleCard(card);
+    card.css('border', '1px solid red');
   }
 
 }

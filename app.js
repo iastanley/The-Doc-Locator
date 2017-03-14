@@ -4,7 +4,7 @@ var mapCenter;
 
 //google maps API callback function runs when script loads
 function initMap() {
-  specialtyOptions();
+  specialtyOptions(specialtyList.data);
   var geocoder = new google.maps.Geocoder();
 
   //form event handler
@@ -30,10 +30,11 @@ function initMap() {
           center: mapCenter,
           zoom: 8
         });
-        //test data - delete for real version
-        // getBetterDoctorData(testData);
         //ajax call to betterdoctor API using locaiton as search query and filters
         getBetterDoctorData(mapCenter, filter, docDataCallback);
+
+        //******** test data - delete for real version *******
+        // getBetterDoctorData(testData);
       } else {
         console.log('Geolocation service error: ' + status);
       }
@@ -44,6 +45,12 @@ function initMap() {
     toggleCard($(this).parent());
   });
 
+  //testData handler for betterdoctor API data
+  //remove from final version
+  // function getBetterDoctorData(data) {
+  //   docDataCallback(data);
+  // }
+
   //betterdoctor API ajax call handler
   //this is the version for the final code
   function getBetterDoctorData(location, filter, callback) {
@@ -51,8 +58,17 @@ function initMap() {
     var query = {
       user_key: '21117ecb33b4e4b1650558f7b9657e24',
       location: location.lat() + ',' + location.lng() + ',20',
-      limit: 20
+      limit: 20,
     }
+
+    if (filter.specialty) {
+      query.specialty = filter.specialty;
+    }
+
+    if (filter.gender) {
+      query.gender = filter.gender;
+    }
+
     $.getJSON(BETTER_DOCTOR_URL, query, callback);
   }
 
@@ -63,12 +79,6 @@ function initMap() {
       gender: gender
     }
   }
-
-  //testData handler for betterdoctor API data
-  //remove from final version
-  // function getBetterDoctorData(data) {
-  //   docDataCallback(data);
-  // }
 
   //callback function for the betterdoctor API call
   function docDataCallback(data){
@@ -150,7 +160,7 @@ function initMap() {
 
   }
 
-  function specialtyOptions() {
+  function specialtyOptions(list) {
     //hard coded for the moment
     //betterdoctor api offers
     var options = [
@@ -162,9 +172,9 @@ function initMap() {
     ];
 
     var html = '<option value="" selected disabled>Choose a Specialty</option>';
-    for (var i = 0; i < options.length; i++) {
-      html += '<option value="' + options[i].uid + '">';
-      html += options[i].name;
+    for (var i = 0; i < list.length; i++) {
+      html += '<option value="' + list[i].uid + '">';
+      html += list[i].name;
       html += '</option>';
     }
 

@@ -14,6 +14,13 @@ function initMap() {
     $('header').removeClass('full-screen');
     //get input from user
     var userLocation = $('#user-input').val();
+
+    //get optional filters from user
+    var specialtyValue = $('#specialty').val();
+    var genderValue = $('#gender').val();
+    var acceptingValue = Boolean($('#newPatients:checked').val());
+    var filter = createFilterObject(specialtyValue, genderValue, acceptingValue);
+
     //use geocoding to get location
     geocoder.geocode({'address': userLocation}, function(results, status){
       if (status == 'OK') {
@@ -50,6 +57,15 @@ function initMap() {
   //   $.getJSON(BETTER_DOCTOR_URL, query, callback);
   // }
 
+  //constructs filter object
+  function createFilterObject(specialty, gender, accepting) {
+    return {
+      specialty: specialty,
+      gender: gender,
+      accepting: accepting
+    }
+  }
+
   //testData handler for betterdoctor API data
   //remove from final version
   function getBetterDoctorData(data) {
@@ -61,12 +77,12 @@ function initMap() {
     //build html for results section
     displayDocResults(data);
     //get doctor locations and add markers to map
-    getDocLocations(data);
+    displayMarkers(data);
 
   }
 
   //add marker data to map based on doctor locations
-  function getDocLocations(data){
+  function displayMarkers(data){
     //bounds object needed to fit all markers in map zoomed view
     var bounds = new google.maps.LatLngBounds();
     //loop through each doctor in data object
@@ -114,7 +130,6 @@ function initMap() {
             + (data.data[i].profile.middle_name || '') + ' '
             + data.data[i].profile.last_name + ', '
             + data.data[i].profile.title;
-            console.log(data.data[i]);
       if (data.data[i].specialties) {
         specialty = data.data[i].specialties[0].name;
       } else {

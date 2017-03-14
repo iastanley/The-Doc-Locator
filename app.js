@@ -161,6 +161,20 @@ function initMap() {
   }
 
   function specialtyOptions(list) {
+    //sort list
+    var list = list.sort(function(first, second) {
+      var name1 = first.name.toUpperCase();
+      var name2 = second.name.toUpperCase();
+      if (name1 < name2) {
+        return -1;
+      }
+      if (name1 > name2) {
+        return 1;
+      }
+      return 0;
+
+    });
+
     var html = '<option value="" selected disabled>Choose a Specialty</option>';
     html += '<option value="">All Specialties</option>';
     for (var i = 0; i < list.length; i++) {

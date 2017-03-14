@@ -161,17 +161,8 @@ function initMap() {
   }
 
   function specialtyOptions(list) {
-    //hard coded for the moment
-    //betterdoctor api offers
-    var options = [
-      {uid: "body-imaging-radiologist", name: "Body Imaging"},
-      {uid: "clinical-pathologist", name: "Clinical Pathology"},
-      {uid: "allergy-immunology-allergy", name: "Allergy & Immunology"},
-      {uid: "dermatologist", name: "Dermatology"},
-      {uid: "immunodermatologist", name: "Clinical & Laboratory Dermatological Immunology"}
-    ];
-
     var html = '<option value="" selected disabled>Choose a Specialty</option>';
+    html += '<option value="">All Specialties</option>';
     for (var i = 0; i < list.length; i++) {
       html += '<option value="' + list[i].uid + '">';
       html += list[i].name;

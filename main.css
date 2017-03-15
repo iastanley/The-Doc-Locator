@@ -49,6 +49,10 @@ form div {
 }
 
 /*Full screen header styles*/
+#results, #map {
+  display: none;
+}
+
 .full-screen {
   height: 100vh;
   text-align: center;

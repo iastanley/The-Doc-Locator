@@ -10,11 +10,12 @@ function initMap() {
   //form event handler
   $('#search-form').submit(function(event){
     event.preventDefault();
-    //switch to results view by changing header style
+    //switch to results view
     $('header').removeClass('full-screen');
+    $('#results').show();
+    $('#map').show();
     //get input from user
     var userLocation = $('#user-input').val();
-
     //get optional filters from user
     var specialtyValue = $('#specialty').val();
     var genderValue = $('#gender').val();
@@ -24,17 +25,16 @@ function initMap() {
     geocoder.geocode({'address': userLocation}, function(results, status){
       if (status == 'OK') {
         mapCenter = results[0].geometry.location;
-        console.log(mapCenter.lat() + ',' + mapCenter.lng());
         //initialize the map with the user input location
         map = new google.maps.Map(document.getElementById('map'), {
           center: mapCenter,
           zoom: 8
         });
         //ajax call to betterdoctor API using locaiton as search query and filters
-        getBetterDoctorData(mapCenter, filter, docDataCallback);
+        // getBetterDoctorData(mapCenter, filter, docDataCallback);
 
         //******** test data - delete for real version *******
-        // getBetterDoctorData(testData);
+        getBetterDoctorData(testData);
       } else {
         console.log('Geolocation service error: ' + status);
       }
@@ -47,30 +47,30 @@ function initMap() {
 
   //testData handler for betterdoctor API data
   //remove from final version
-  // function getBetterDoctorData(data) {
-  //   docDataCallback(data);
-  // }
+  function getBetterDoctorData(data) {
+    docDataCallback(data);
+  }
 
   //betterdoctor API ajax call handler
   //this is the version for the final code
-  function getBetterDoctorData(location, filter, callback) {
-    //make ajax call to betterdoctor API
-    var query = {
-      user_key: '21117ecb33b4e4b1650558f7b9657e24',
-      location: location.lat() + ',' + location.lng() + ',20',
-      limit: 20,
-    }
-
-    if (filter.specialty) {
-      query.specialty = filter.specialty;
-    }
-
-    if (filter.gender) {
-      query.gender = filter.gender;
-    }
-
-    $.getJSON(BETTER_DOCTOR_URL, query, callback);
-  }
+  // function getBetterDoctorData(location, filter, callback) {
+  //   //make ajax call to betterdoctor API
+  //   var query = {
+  //     user_key: '21117ecb33b4e4b1650558f7b9657e24',
+  //     location: location.lat() + ',' + location.lng() + ',20',
+  //     limit: 20,
+  //   }
+  //
+  //   if (filter.specialty) {
+  //     query.specialty = filter.specialty;
+  //   }
+  //
+  //   if (filter.gender) {
+  //     query.gender = filter.gender;
+  //   }
+  //
+  //   $.getJSON(BETTER_DOCTOR_URL, query, callback);
+  // }
 
   //constructs filter object
   function createFilterObject(specialty, gender) {

@@ -21,11 +21,11 @@ form {
 }
 
 select[name="specialty"] {
-  width: 40%;
+  width: 70%;
 }
 
 select[name="gender"] {
-  width: 18%;
+  width: 28%;
 }
 
 h1, h4 {
@@ -34,6 +34,7 @@ h1, h4 {
 
 h4 {
   display: none;
+  font-weight: lighter;
 }
 
 form div {
@@ -45,7 +46,7 @@ form div {
 }
 
 .search button {
-  width: 19%;
+  width: 18%;
 }
 
 /*Full screen header styles*/
@@ -130,4 +131,41 @@ form div {
   margin: 0;
   text-align: center;
   font-size: 1.5em;
+}
+
+@media only screen and (max-width: 800px) {
+  .full-screen form div {
+    margin: 20px auto;
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .full-screen form div {
+    margin: 20px auto;
+    width: 100%;
+  }
+
+  .full-screen form {
+    font-size: 1em;
+  }
+
+  .search input, .search button, .filters select {
+    border: 1px solid black;
+    height: 30px;
+  }
+
+  #map {
+    height: 80vh;
+    width: 100%;
+    float: none;
+  }
+
+  #results {
+    height: auto;
+    width: 100%;
+    float: none;
+    overflow-y: visible;
+  }
+
 }

@@ -13,4 +13,4 @@ To see The Doc Locator in action visit [https://iastanley.github.io/capstone1_th
 * The physician location and other meta data are available via the [BetterDoctor.com](https://betterdoctor.com/) API.
 * Geocoding and map visualization is provided by the Google Maps Javascript API.    
 * Form submission, asynchronous API calls (AJAX), and DOM manipulation were done using Javascript and jQuery.
-* A responsive and mobile ready site was built using modern HTML5 and CSS.
+* A responsive and mobile ready site was built using HTML5 and CSS3.

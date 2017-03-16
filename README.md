@@ -1,7 +1,7 @@
 # The Doc Locator
-First capstone project for [Thinkful Flexible Web Development Bootcamp](https://www.thinkful.com/bootcamp/web-development/flexible/) designed to showcase the use of APIs, AJAX calls, and original app development from start to finish.
+First capstone project for Thinkful's [Flexible Web Development Bootcamp](https://www.thinkful.com/bootcamp/web-development/flexible/) designed to showcase the use of APIs, AJAX calls, and original app development from start to finish.
 
-![Desktop Screenshot](DocLocator_DesktopScreenshot.png)  ![Mobile Screenshot](DocLocator_MobileScreenshot.png)
+![Screenshot](DesktopandMobile-Screenshot.png)
 
 ## Summary
 The Doc Locator allows the user to input a city, address, or zipcode and retrieve a list of doctors located nearby. The search results are displayed as both a list and on Google Maps to aid the user in browsing nearby doctors. Search results can be filtered based on physician specialty and gender.

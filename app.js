@@ -21,7 +21,7 @@ function initMap() {
     var genderValue = $('#gender').val();
     var filter = createFilterObject(specialtyValue, genderValue);
 
-    //use geocoding to get location
+    //use google maps geocoding to get location
     geocoder.geocode({'address': userLocation}, function(results, status){
       if (status == 'OK') {
         mapCenter = results[0].geometry.location;
@@ -30,47 +30,35 @@ function initMap() {
           center: mapCenter,
           zoom: 8
         });
-        //ajax call to betterdoctor API using locaiton as search query and filters
-        // getBetterDoctorData(mapCenter, filter, docDataCallback);
-
-        //******** test data - delete for real version *******
-        getBetterDoctorData(testData);
+        //ajax call to betterdoctor API
+        getBetterDoctorData(mapCenter, filter, docDataCallback);
       } else {
         console.log('Geolocation service error: ' + status);
       }
     });
   });
 
+  //listener for expanding/closing each card via arrow
   $('#results').on('click', '.expand', function(){
     toggleCard($(this).parent());
   });
 
-  //testData handler for betterdoctor API data
-  //remove from final version
-  function getBetterDoctorData(data) {
-    docDataCallback(data);
-  }
-
   //betterdoctor API ajax call handler
-  //this is the version for the final code
-  // function getBetterDoctorData(location, filter, callback) {
-    //make ajax call to betterdoctor API
-  //   var query = {
-  //     user_key: '21117ecb33b4e4b1650558f7b9657e24',
-  //     location: location.lat() + ',' + location.lng() + ',20',
-  //     limit: 20
-  //   }
-  //
-  //   if (filter.specialty) {
-  //     query.specialty_uid = filter.specialty;
-  //   }
-  //
-  //   if (filter.gender) {
-  //     query.gender = filter.gender;
-  //   }
-  //
-  //   $.getJSON(BETTER_DOCTOR_URL, query, callback);
-  // }
+  function getBetterDoctorData(location, filter, callback) {
+    var query = {
+      user_key: '21117ecb33b4e4b1650558f7b9657e24',
+      location: location.lat() + ',' + location.lng() + ',20',
+      limit: 20
+    }
+    //if user selects filters add to query object
+    if (filter.specialty) {
+      query.specialty_uid = filter.specialty;
+    }
+    if (filter.gender) {
+      query.gender = filter.gender;
+    }
+    $.getJSON(BETTER_DOCTOR_URL, query, callback);
+  }
 
   //constructs filter object
   function createFilterObject(specialty, gender) {
@@ -121,10 +109,11 @@ function initMap() {
     map.fitBounds(bounds);
   }
 
+  //build html for doctor cards in results
   function displayDocResults(data){
     //build html for doctor result cards
     var html = '<h3>Results</h3>';
-    //create array of what we need
+    //variables for each API property
     var imgSrc;
     var name;
     var specialty;
@@ -137,7 +126,6 @@ function initMap() {
       } else {
         imgSrc = data.data[i].profile.image_url;
       }
-
       name = data.data[i].profile.first_name + ' '
             + (data.data[i].profile.middle_name || '') + ' '
             + data.data[i].profile.last_name + ', '
@@ -159,13 +147,11 @@ function initMap() {
       html += '<p class="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
       html += '</div>';
     }
-
     $('#results').html(html);
-
   }
 
   function specialtyOptions(list) {
-    //sort list
+    //alphabetic sort of specialties.js list
     var list = list.sort(function(first, second) {
       var name1 = first.name.toUpperCase();
       var name2 = second.name.toUpperCase();
@@ -176,9 +162,8 @@ function initMap() {
         return 1;
       }
       return 0;
-
     });
-
+    //build option tags for each specialty
     var html = '<option value="" selected disabled>Choose a Specialty</option>';
     html += '<option value="">All Specialties</option>';
     for (var i = 0; i < list.length; i++) {
@@ -186,7 +171,6 @@ function initMap() {
       html += list[i].name;
       html += '</option>';
     }
-
     $('#specialty').html(html);
   }
 

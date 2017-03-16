@@ -14,6 +14,8 @@ h1 {
   width: 40%;
   float: left;
   vertical-align: middle;
+  font-weight: lighter;
+  line-height: 1.8;
 }
 
 form {
@@ -178,6 +180,12 @@ button:focus {
     width: 100%;
     float: none;
     text-align: center;
+    line-height: 1;
+    font-size: 1.5em;
+  }
+
+  .full-screen h1 {
+    font-size: 2em;
   }
 
   form {

@@ -54,15 +54,15 @@ function initMap() {
   //betterdoctor API ajax call handler
   //this is the version for the final code
   // function getBetterDoctorData(location, filter, callback) {
-  //   //make ajax call to betterdoctor API
+    //make ajax call to betterdoctor API
   //   var query = {
   //     user_key: '21117ecb33b4e4b1650558f7b9657e24',
   //     location: location.lat() + ',' + location.lng() + ',20',
-  //     limit: 20,
+  //     limit: 20
   //   }
   //
   //   if (filter.specialty) {
-  //     query.specialty = filter.specialty;
+  //     query.specialty_uid = filter.specialty;
   //   }
   //
   //   if (filter.gender) {
@@ -104,10 +104,14 @@ function initMap() {
             lng: data.data[i].practices[j].lon
           },
           map: map,
-          title: data.data[i].uid
+          title: data.data[i].profile.first_name + ' '
+                + (data.data[i].profile.middle_name || '') + ' '
+                + data.data[i].profile.last_name + ', '
+                + data.data[i].profile.title,
+          lookUp: data.data[i].uid
         });
         marker.addListener('click', function(){
-          var id = this.title;
+          var id = this.lookUp;
           document.getElementById(id).scrollIntoView(true);
           selectCard($('#' + id));
         });
@@ -133,7 +137,7 @@ function initMap() {
       } else {
         imgSrc = data.data[i].profile.image_url;
       }
-      // imgSrc = data.data[i].profile.image_url ? data.data[i].profile.image_url : 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
+
       name = data.data[i].profile.first_name + ' '
             + (data.data[i].profile.middle_name || '') + ' '
             + data.data[i].profile.last_name + ', '

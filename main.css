@@ -123,6 +123,13 @@ button:focus {
   margin: 20px auto;
 }
 
+#map .error {
+  text-align: center;
+  font-weight: bold;
+  color: #f00;
+  margin: 20px auto;
+}
+
 .doc-card {
   width: 90%;
   margin: 10px auto;

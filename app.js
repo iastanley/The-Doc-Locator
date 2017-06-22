@@ -33,7 +33,7 @@ function initMap() {
         //ajax call to betterdoctor API
         getBetterDoctorData(mapCenter, filter, docDataCallback);
       } else {
-        console.error('Geolocation service error: ' + status);
+        $('#map').html('<h3 class="error">Location Not Found</h3>');
       }
     });
   });
@@ -70,7 +70,6 @@ function createFilterObject(specialty, gender) {
 
 //callback function for the betterdoctor API call
 function docDataCallback(data){
-  console.log(data);
   //build html for results section
   displayDocResults(data);
   //get doctor locations and add markers to map

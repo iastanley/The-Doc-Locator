@@ -117,6 +117,19 @@ button:focus {
   font-weight: normal;
 }
 
+#results .error {
+  color: #f00;
+  font-weight: bold;
+  margin: 20px auto;
+}
+
+#map .error {
+  text-align: center;
+  font-weight: bold;
+  color: #f00;
+  margin: 20px auto;
+}
+
 .doc-card {
   width: 90%;
   margin: 10px auto;

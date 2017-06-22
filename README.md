@@ -7,7 +7,7 @@ First capstone project for Thinkful's [Flexible Web Development Bootcamp](https:
 The Doc Locator allows the user to input a city, address, or zipcode and retrieve a list of doctors located nearby. The search results are displayed as both a list and on Google Maps to aid the user in browsing nearby doctors. Search results can be filtered based on physician specialty and gender.
 
 ## Live Site
-To see The Doc Locator in action visit [https://iastanley.github.io/capstone1_theDocLocator](https://iastanley.github.io/capstone1_theDocLocator/)
+To see The Doc Locator in action visit [https://iastanley.github.io/The-Doc-Locator/](https://iastanley.github.io/The-Doc-Locator/)
 
 ## Implementation
 * The physician location and other meta data are available via the [BetterDoctor.com](https://betterdoctor.com/) API.

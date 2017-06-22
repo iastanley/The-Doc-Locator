@@ -33,7 +33,7 @@ function initMap() {
         //ajax call to betterdoctor API
         getBetterDoctorData(mapCenter, filter, docDataCallback);
       } else {
-        console.log('Geolocation service error: ' + status);
+        console.error('Geolocation service error: ' + status);
       }
     });
   });
@@ -70,6 +70,7 @@ function createFilterObject(specialty, gender) {
 
 //callback function for the betterdoctor API call
 function docDataCallback(data){
+  console.log(data);
   //build html for results section
   displayDocResults(data);
   //get doctor locations and add markers to map
@@ -79,34 +80,37 @@ function docDataCallback(data){
 
 //add marker data to map based on doctor locations
 function displayMarkers(data){
-  //bounds object needed to fit all markers in map zoomed view
-  var bounds = new google.maps.LatLngBounds();
-  //loop through each doctor in data object
-  for (var i = 0; i < data.data.length; i++) {
-    //loop through each practice for a particular doctor
-    for (var j = 0; j < data.data[i].practices.length; j++) {
-      //add marker to map
-      var marker = new google.maps.Marker({
-        position: {
-          lat: data.data[i].practices[j].lat,
-          lng: data.data[i].practices[j].lon
-        },
-        map: map,
-        title: data.data[i].profile.first_name + ' '
-              + (data.data[i].profile.middle_name || '') + ' '
-              + data.data[i].profile.last_name + ', '
-              + data.data[i].profile.title,
-        lookUp: data.data[i].uid
-      });
-      marker.addListener('click', function(){
-        var id = this.lookUp;
-        document.getElementById(id).scrollIntoView(true);
-        selectCard($('#' + id));
-      });
-      bounds.extend(marker.getPosition());
+  // if there is no data returned map location will remain user initialized value
+  if (data.data.length) {
+    //bounds object needed to fit all markers in map zoomed view
+    var bounds = new google.maps.LatLngBounds();
+    //loop through each doctor in data object
+    for (var i = 0; i < data.data.length; i++) {
+      //loop through each practice for a particular doctor
+      for (var j = 0; j < data.data[i].practices.length; j++) {
+        //add marker to map
+        var marker = new google.maps.Marker({
+          position: {
+            lat: data.data[i].practices[j].lat,
+            lng: data.data[i].practices[j].lon
+          },
+          map: map,
+          title: data.data[i].profile.first_name + ' '
+                + (data.data[i].profile.middle_name || '') + ' '
+                + data.data[i].profile.last_name + ', '
+                + data.data[i].profile.title,
+          lookUp: data.data[i].uid
+        });
+        marker.addListener('click', function(){
+          var id = this.lookUp;
+          document.getElementById(id).scrollIntoView(true);
+          selectCard($('#' + id));
+        });
+        bounds.extend(marker.getPosition());
+      }
     }
+    map.fitBounds(bounds);
   }
-  map.fitBounds(bounds);
 }
 
 //build html for doctor cards in results
@@ -119,33 +123,38 @@ function displayDocResults(data){
   var specialty;
   var description;
   var uid;
-  //build html
-  for (var i = 0; i < data.data.length; i++) {
-    if (data.data[i].profile.image_url.indexOf('_female') !== -1) {
-      imgSrc = 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
-    } else {
-      imgSrc = data.data[i].profile.image_url;
+
+  if (data.data.length) {
+    //build html
+    for (var i = 0; i < data.data.length; i++) {
+      if (data.data[i].profile.image_url.indexOf('_female') !== -1) {
+        imgSrc = 'https://asset3.betterdoctor.com/assets/general_doctor_male.png';
+      } else {
+        imgSrc = data.data[i].profile.image_url;
+      }
+      name = data.data[i].profile.first_name + ' '
+            + (data.data[i].profile.middle_name || '') + ' '
+            + data.data[i].profile.last_name + ', '
+            + data.data[i].profile.title;
+      if (data.data[i].specialties) {
+        specialty = data.data[i].specialties[0].name;
+      } else {
+        specialty = '';
+      }
+      uid = data.data[i].uid;
+      description = data.data[i].profile.bio;
+      html += '<div class="doc-card" id="' + uid + '">';
+      html += '<img src="' + imgSrc + '">';
+      html += '<div class="min-description">';
+      html += '<p><strong>Name: </strong>' + name + '</p>';
+      html += '<p><strong>Specialty: </strong>' + specialty + '</p>';
+      html += '</div>';
+      html += '<div class="expanded-description"><p>' + description + '</div>';
+      html += '<p class="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
+      html += '</div>';
     }
-    name = data.data[i].profile.first_name + ' '
-          + (data.data[i].profile.middle_name || '') + ' '
-          + data.data[i].profile.last_name + ', '
-          + data.data[i].profile.title;
-    if (data.data[i].specialties) {
-      specialty = data.data[i].specialties[0].name;
-    } else {
-      specialty = '';
-    }
-    uid = data.data[i].uid;
-    description = data.data[i].profile.bio;
-    html += '<div class="doc-card" id="' + uid + '">';
-    html += '<img src="' + imgSrc + '">';
-    html += '<div class="min-description">';
-    html += '<p><strong>Name: </strong>' + name + '</p>';
-    html += '<p><strong>Specialty: </strong>' + specialty + '</p>';
-    html += '</div>';
-    html += '<div class="expanded-description"><p>' + description + '</div>';
-    html += '<p class="expand"><i class="fa fa-chevron-down" aria-hidden="true"></i></p>';
-    html += '</div>';
+  } else {
+    html += '<h3 class="error">No Results Found</h3>';
   }
   $('#results').html(html);
 }

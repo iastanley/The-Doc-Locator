@@ -13,24 +13,52 @@
   </head>
   <body>
     <header class="full-screen">
-      <h1 class="title">The Doc Locator</h1>
-      <h4 class="title">Find a doctor near you</h4>
-      <form id="search-form">
-        <div class="search">
-          <input id="user-input" type="text" placeholder="Search by city, address or zipcode..." required>
-          <button type="submit" name="button">Search</button>
+      <div class="hero-section">
+        <h1 class="title">The Doc Locator</h1>
+        <h4 class="title">Find a doctor near you</h4>
+        <form id="search-form">
+          <div class="search">
+            <input id="user-input" type="text" placeholder="Search by city, address or zipcode..." required>
+            <button type="submit" name="button">Search</button>
+          </div>
+          <div class="filters">
+            <select id="specialty" name="specialty">
+            </select>
+            <select id="gender" name="gender">
+              <option value="" selected disabled>Gender</option>
+              <option value="">Both</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="about-section">
+        <h2>Easily Research Doctors in Your Area</h2>
+        <div>
+          <div class="about-panel">
+            <div class="about-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+            <div class="about-description">
+              <p>Search for a doctor by city, address, or zipcode</p>
+              <p>Filter your search results by specialty or gender to narrow things down</p>
+            </div>
+          </div>
+          <div class="about-panel">
+            <div class="about-icon"><i class="fa fa-map-o" aria-hidden="true"></i></div>
+            <div class="about-description">
+              <p>Locate the doctors nearest you</p>
+              <p>Powered by Google Maps&trade;</p>
+            </div>
+          </div>
+          <div class="about-panel">
+            <div class="about-icon"><i class="fa fa-user-md" aria-hidden="true"></i></div>
+            <div class="about-description">
+              <p>Easily view important details about each doctor you find</p>
+              <p>Powered by the BetterDoctor API</p>
+            </div>
+          </div>
         </div>
-        <div class="filters">
-          <select id="specialty" name="specialty">
-          </select>
-          <select id="gender" name="gender">
-            <option value="" selected disabled>Gender</option>
-            <option value="">Both</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-      </form>
+      </div>
     </header>
 
     <!-- Google Maps -->

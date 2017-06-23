@@ -104,7 +104,8 @@ button:focus {
 
 .full-screen .hero-section {
   /*placeholder for hero-image*/
-  background: #000;
+  background: url(images/hero-image-desktop.jpg) no-repeat center center fixed;
+  background-size:cover;
   width: 100%;
   height: 50vh;
   padding-top: 100px;

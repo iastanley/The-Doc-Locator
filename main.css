@@ -128,17 +128,18 @@ button:focus {
 .about-panel {
   width: 33%;
   display: inline-block;
+  vertical-align: top;
 }
 
-.about-panel i {
+.about-panel .fa {
   font-size: 4em;
-  /*vertical-align: bottom;*/
 }
 
 .about-description p {
   max-width: 80%;
   margin: 16px auto;
   font-weight: lighter;
+  vertical-align: top;
 }
 
 #map {
